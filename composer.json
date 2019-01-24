@@ -1,0 +1,20 @@
+{
+    "name": "package-of-yii/pusher",
+    "description": "Yii2 wrapper for Pusher",
+    "keywords": ["yii2", "realtime", "pusher.com"],
+    "type": "yii2-extension",
+    "license": "BSD-3-Clause",
+    "support": {
+        "issues": "https://github.com/package-of-yii/yii2-pusher/issues",
+        "source": "https://github.com/package-of-yii/yii2-pusher"
+    },
+    "require": {
+        "php": ">=5.5.0",
+        "pusher/pusher-php-server": "^3.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "POYii\\Pusher\\": "src/"
+        }
+    }
+}
