@@ -1,9 +1,15 @@
 {
     "name": "package-of-yii/pusher",
-    "description": "Yii2 wrapper for Pusher",
-    "keywords": ["yii2", "realtime", "pusher.com"],
+    "description": "The Pusher wrapper for Yii2.",
+    "keywords": ["yii2", "realtime", "pusher.com", "yii2-pusher"],
     "type": "yii2-extension",
-    "license": "BSD-3-Clause",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Pralhad Shrestha",
+            "email": "pralhad.shrestha05@gmail.com"
+        }
+    ],
     "support": {
         "issues": "https://github.com/package-of-yii/yii2-pusher/issues",
         "source": "https://github.com/package-of-yii/yii2-pusher"
