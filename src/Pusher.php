@@ -4,6 +4,7 @@ namespace POYii\Pusher;
 
 use yii\base\Component;
 use yii\base\InvalidConfigException;
+use Pusher\Pusher as Push;
 
 
 /**
@@ -69,7 +70,7 @@ class Pusher extends Component
         }
 
         if ($this->pusher === null) {
-            $this->pusher = new \Pusher($this->appKey, $this->appSecret, $this->appId, $this->options);
+            $this->pusher = new Push($this->appKey, $this->appSecret, $this->appId, $this->options);
         }
     }
 
@@ -93,7 +94,7 @@ class Pusher extends Component
      * Trigger an event by providing event name and payload.
      * Optionally provide a socket ID to exclude a client (most likely the sender).
      *
-     * @param array $channels An array of channel names to publish the event on
+     * @param $channels An array of channel names to publish the event on
      * @param $event
      * @param $data
      * @param null $socketId
@@ -101,7 +102,7 @@ class Pusher extends Component
      * @param bool $encoded
      * @return bool|string
      */
-    public function push(array $channels, $event, $data, $socketId = null, $debug = false, $encoded = false)
+    public function push($channels, $event, $data, $socketId = null, $debug = false, $encoded = false)
     {
         $this->pusher->trigger($channels, $event, $data, $socketId, $debug, $encoded);
     }
