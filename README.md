@@ -9,16 +9,10 @@ Makes Pusher integration easier with Yii2.
 Add this config to your configuration file. 
 
     'pusher' => [
-        'class' => '',
-        /*
-         * Mandatory parameters.
-         */
+        'class' => 'POYii\Pusher\Pusher',
         'appId' => 'YOUR_APP_ID',
         'appKey' => 'YOUR_APP_KEY',
         'appSecret' => 'YOUR_APP_SECRET',
-        /*
-         * Optional parameters.
-         */
         'options' => ['encrypted' => true, 'cluster' => 'YOUR_APP_CLUSTER']
     ],
 
@@ -27,7 +21,39 @@ Add appID, appKey, appSecret and appCluster to the above configuration.
 
 Typical Example of usage:
 
+Php:
+
     Yii::$app->pusher->push('my-channel', 'my_event', 'hello world');
+
+Frontend:
+
+    <!DOCTYPE html>
+    <head>
+      <title>Pusher Test</title>
+      <script src="https://js.pusher.com/4.3/pusher.min.js"></script>
+      <script>
+    
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+    
+        var pusher = new Pusher('YOUR_APP_KEY', {
+          cluster: 'eu',
+          forceTLS: true
+        });
+    
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function(data) {
+          alert(JSON.stringify(data));
+        });
+      </script>
+    </head>
+    <body>
+      <h1>Pusher Test</h1>
+      <p>
+        Try publishing an event to channel <code>my-channel</code>
+        with event name <code>my-event</code>.
+      </p>
+    </body>
 
 ## License
 
