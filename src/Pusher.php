@@ -2,6 +2,7 @@
 
 namespace POYii\Pusher;
 
+use POYii\Pusher\Encryption\Encrypter;
 use yii\base\Component;
 use yii\base\InvalidConfigException;
 use Pusher\Pusher as Push;
@@ -14,7 +15,7 @@ use Pusher\Pusher as Push;
 class Pusher extends Component
 {
     /**
-     * @var object
+     * @var Push
      */
     private $pusher = null;
 
@@ -42,6 +43,16 @@ class Pusher extends Component
      * @var array
      */
     public $options = [];
+
+    /**
+     * @var string
+     */
+    public $channelPrefix = 'channel';
+
+    /**
+     * @var Encrypter
+     */
+    private $encrypter = null;
 
     /**
      * Performing the initialization of the $appId, $appKey, $appSecret and $options before the parent
@@ -72,6 +83,7 @@ class Pusher extends Component
         if ($this->pusher === null) {
             $this->pusher = new Push($this->appKey, $this->appSecret, $this->appId, $this->options);
         }
+        $this->encrypter = new Encrypter($this->appSecret);
     }
 
     /**
@@ -105,5 +117,25 @@ class Pusher extends Component
     public function push($channels, $event, $data, $socketId = null, $debug = false, $encoded = false)
     {
         $this->pusher->trigger($channels, $event, $data, $socketId, $debug, $encoded);
+    }
+
+    /**
+     * Convert the given channels to a unique value.
+     *
+     * @param array $channels
+     * @return string
+     */
+    public function getUserChannels(array $channels = [])
+    {
+        if (empty($channels)) {
+            return '';
+        }
+
+        foreach ($channels as $channel) {
+            $suffix = $this->encrypter->encryptSha1($channel);
+            $array[] = "$this->channelPrefix-$suffix";
+        }
+
+        return count($array) > 1 ? $array : reset($array);
     }
 }
